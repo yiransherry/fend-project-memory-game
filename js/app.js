@@ -2,45 +2,12 @@
  * Create a list that holds all of your cards
  */
 
-const diamond1 = document.getElementsByClassName("fa-diamond")[0];
-const diamond2 = document.getElementsByClassName("fa-diamond")[1];
-const paperPlane1 = document.getElementsByClassName("fa-paper-plane-o")[0];
-const paperPlane2 = document.getElementsByClassName("fa-paper-plane-o")[1];
-const anchor1 = document.getElementsByClassName("fa-anchor")[0];
-const anchor2 = document.getElementsByClassName("fa-anchor")[1];
-const bolt1 = document.getElementsByClassName("fa-bolt")[0];
-const bolt2 = document.getElementsByClassName("fa-bolt")[1];
-const cube1 = document.getElementsByClassName("fa-cube")[0];
-const cube2 = document.getElementsByClassName("fa-cube")[1];
-const leaf1 = document.getElementsByClassName("fa-leaf")[0];
-const leaf2 = document.getElementsByClassName("fa-leaf")[1];
-const bicycle1 = document.getElementsByClassName("fa-bicycle")[0];
-const bicycle2 = document.getElementsByClassName("fa-bicycle")[1];
-const bomb1 = document.getElementsByClassName("fa-bomb")[0];
-const bomb2 = document.getElementsByClassName("fa-bomb")[1];
+// variable for cards:
+const card = document.getElementsByClassName("card");
+const cards = Array.from(card);
 
-const cards = [
-    diamond1,
-    diamond2,
-    paperPlane1,
-    paperPlane2,
-    anchor1,
-    anchor2,
-    bolt1,
-    bolt2,
-    cube1,
-    cube2,
-    leaf1,
-    leaf2,
-    bicycle1,
-    bicycle2,
-    bomb1,
-    bomb2,
-];
-
+const deck = document.getElementsByClassName("deck")[0];
 const restart = document.getElementsByClassName("restart")[0];
-
-// $("li").addClass( "match" );
 
 /*
  * Display the cards on the page
@@ -74,3 +41,27 @@ function shuffle(cards) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+deck.addEventListener("click", function(event) {
+
+    // variable for card matching
+    const open = document.getElementsByClassName("open");
+    const openCards = Array.from(open);
+
+    // add conditional statements to check if there is another card open:
+    // if there are two cards open, check if they match:
+    if (openCards.length < 2) {
+        event.target.classList.add("show", "open");
+    } else if (openCards.length = 2) {
+        if (openCards[0].firstElementChild.className === openCards[1].firstElementChild.className) {
+            for (let i = 0; i < openCards.length; i ++) {
+                openCards[i].classList.add("match");
+                openCards[i].classList.remove("show", "open");
+            }
+        } else if (openCards[0].firstElementChild.className !== openCards[1].firstElementChild.className){
+            for (let i = 0; i < openCards.length; i ++) {
+                openCards[i].classList.remove("show", "open");
+            }
+        }
+    }
+})
