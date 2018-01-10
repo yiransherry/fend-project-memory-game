@@ -3,15 +3,32 @@
  */
 
 // variable for cards:
-const card = document.getElementsByClassName("card");
-const cards = Array.from(card);
+let cards = [
+    "fa-diamond",
+    "fa-paper-plane-o",
+    "fa-anchor",
+    "fa-bolt",
+    "fa-cube",
+    "fa-leaf",
+    "fa-bicycle",
+    "fa-bomb",
+    "fa-diamond",
+    "fa-paper-plane-o",
+    "fa-anchor",
+    "fa-bolt",
+    "fa-cube",
+    "fa-leaf",
+    "fa-bicycle",
+    "fa-bomb"
+];
+// let card = document.getElementsByClassName("card");
+// let cards = Array.from(card);
 const deck = document.getElementsByClassName("deck")[0];
 let matchedCards = [];
 
 let moves = document.getElementsByClassName("moves")[0];
 let moveCount = 0;
 let starRating = document.getElementsByClassName("stars");
-
 
 const restart = document.getElementsByClassName("restart")[0];
 
@@ -57,6 +74,13 @@ function checkMatch(){
 function moveCounter() {
     moveCount ++;
     moves.textContent = moveCount;
+    // star Rating:
+    let starRating = document.getElementsByClassName("stars")[0];
+    if (moveCount > 20) {
+        starRating.innerHTML = "<li><i class=\"fa fa-star\"></i></li> <li><i class=\"fa fa-star\"></i></li>";
+    } else if (moveCount > 30) {
+        starRating.innerHTML = "<li><i class=\"fa fa-star\"></i></li>";
+    }
 }
 
 /*
@@ -67,20 +91,42 @@ function moveCounter() {
  */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(cards) {
-    var currentIndex = cards.length, temporaryValue, randomIndex;
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-        temporaryValue = cards[currentIndex];
-        cards[currentIndex] = cards[randomIndex];
-        cards[randomIndex] = temporaryValue;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
     }
 
-    return cards;
+    return array;
 }
 
+// function to restart the game
+function newGame(){
+    let newCard = document.getElementsByClassName("card");
+    let newCards = Array.from(newCard);
+
+    // hide all cards and remove icon from each card:
+    for (let i = 0; i < newCards.length; i ++) {
+        newCards[i].classList.remove("open", "show", "match");
+        newCards[i].firstElementChild.className = "fa";
+    }
+
+    let shuffledCards = shuffle(cards);
+
+    // assign icon/class to each card:
+    for (let j = 0; j < newCards.length; j ++) {
+        newCards[j].firstElementChild.classList.add(shuffledCards[j]);
+    }
+}
+
+restart.addEventListener("click", function(event) {
+    newGame();
+})
 
 deck.addEventListener("click", function(event) {
     checkMatch();
