@@ -5,9 +5,59 @@
 // variable for cards:
 const card = document.getElementsByClassName("card");
 const cards = Array.from(card);
-
 const deck = document.getElementsByClassName("deck")[0];
+let matchedCards = [];
+
+let moves = document.getElementsByClassName("moves")[0];
+let moveCount = 0;
+let starRating = document.getElementsByClassName("stars");
+
+
 const restart = document.getElementsByClassName("restart")[0];
+
+// single functions to display or hide cards
+function showCard(card) {
+    card.classList.add("show", "open");
+}
+
+function hideCards(cards) {
+    cards.classList.remove("show", "open");
+}
+
+function matchCards(cards) {
+    cards.classList.add("match");
+    cards.classList.remove("show", "open");
+}
+
+// function to check if two cards match
+function checkMatch(){
+    // variable for card matching
+    const open = document.getElementsByClassName("open");
+    const openCards = Array.from(open);
+
+    // add conditional statements to check if there is another card open:
+    // if there are two cards open, check if they match:
+    if (openCards.length < 2) {
+        showCard(event.target);
+    } else if (openCards.length = 2) {
+        if (openCards[0].firstElementChild.className === openCards[1].firstElementChild.className) {
+            for (let i = 0; i < openCards.length; i ++) {
+                matchCards(openCards[i]);
+                matchedCards.push(openCards[i]);
+            }
+        } else if (openCards[0].firstElementChild.className !== openCards[1].firstElementChild.className){
+            for (let i = 0; i < openCards.length; i ++) {
+                hideCards(openCards[i]);
+            }
+        }
+    }
+}
+
+// increment the move counter and display it on the page:
+function moveCounter() {
+    moveCount ++;
+    moves.textContent = moveCount;
+}
 
 /*
  * Display the cards on the page
@@ -31,6 +81,13 @@ function shuffle(cards) {
     return cards;
 }
 
+
+deck.addEventListener("click", function(event) {
+    checkMatch();
+    moveCounter();
+})
+
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -41,27 +98,3 @@ function shuffle(cards) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-
-deck.addEventListener("click", function(event) {
-
-    // variable for card matching
-    const open = document.getElementsByClassName("open");
-    const openCards = Array.from(open);
-
-    // add conditional statements to check if there is another card open:
-    // if there are two cards open, check if they match:
-    if (openCards.length < 2) {
-        event.target.classList.add("show", "open");
-    } else if (openCards.length = 2) {
-        if (openCards[0].firstElementChild.className === openCards[1].firstElementChild.className) {
-            for (let i = 0; i < openCards.length; i ++) {
-                openCards[i].classList.add("match");
-                openCards[i].classList.remove("show", "open");
-            }
-        } else if (openCards[0].firstElementChild.className !== openCards[1].firstElementChild.className){
-            for (let i = 0; i < openCards.length; i ++) {
-                openCards[i].classList.remove("show", "open");
-            }
-        }
-    }
-})
