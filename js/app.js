@@ -21,8 +21,7 @@ let cards = [
     "fa-bicycle",
     "fa-bomb"
 ];
-// let card = document.getElementsByClassName("card");
-// let cards = Array.from(card);
+
 const deck = document.getElementsByClassName("deck")[0];
 let matchedCards = [];
 
@@ -83,6 +82,30 @@ function moveCounter() {
     }
 }
 
+function winningMessagePopUp() {
+    // create lightbox when the player win the game:
+    // add background, popup box, and message
+    const winningScreen = document.createElement("div");
+    winningScreen.className = "winningScreen";
+    document.body.appendChild(winningScreen);
+    const winningMessageBox = document.createElement("div");
+    winningMessageBox.className = "winningMessageBox";
+    winningScreen.appendChild(winningMessageBox);
+    const winningMessage = document.createElement("p");
+    winningMessage.className = "winningMessage";
+    winningMessageBox.appendChild(winningMessage);
+    winningMessage.innerHTML = "Congratulations! <br> <br> You just won the game with " + moveCount + " moves!";
+
+    // display the winning message
+    winningScreen.style.display = "block";
+
+    // when the lightbox is clicked, hide the message and restart the game
+    winningScreen.addEventListener("click", function(){
+        winningScreen.style.display = "none";
+        newGame()
+    })
+}
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -107,6 +130,9 @@ function shuffle(array) {
 
 // function to restart the game
 function newGame(){
+    moveCount = 0;
+    moves.textContent = moveCount;
+    starRating.innerHTML = "<li><i class=\"fa fa-star\"></i></li> <li><i class=\"fa fa-star\"></i></li> <li><i class=\"fa fa-star\"></i></li>";
     let newCard = document.getElementsByClassName("card");
     let newCards = Array.from(newCard);
 
@@ -131,6 +157,10 @@ restart.addEventListener("click", function(event) {
 deck.addEventListener("click", function(event) {
     checkMatch();
     moveCounter();
+
+    if (matchedCards.length === 16) {
+        winningMessagePopUp();
+    }
 })
 
 

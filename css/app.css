@@ -107,3 +107,35 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+/* winning message */
+.winningScreen {
+ background: rgba(0,0,0,0.8);
+ width: 100%;
+ height: 100%;
+ padding: 20%;
+ position: absolute;
+ top: 0;
+ left: 0;
+ display: none;
+ text-align: center;
+}
+
+.winningMessageBox {
+ top: 30%;
+ margin: auto;
+ padding: 10%;
+ background-color: #2B3D4A;
+ border-radius: 5%;
+ width: 400px;
+ height: 300px;
+}
+
+.winningMessage {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ margin: auto;
+ color: white;
+ font-size: 28px;
+}
